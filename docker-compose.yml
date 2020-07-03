@@ -1,6 +1,12 @@
 version: '3.7'
 
 services:
+  mysql:
+    image: mysql:8.0
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
 
   nginx:
     image: nginx:1.15.3-alpine
@@ -11,7 +17,7 @@ services:
       - './app/public:/usr/src/app'
       - './docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro'
     ports:
-      - '80:80'
+      - '${NGINX_PORT}:80'
 
   php:
     build:
@@ -20,4 +26,21 @@ services:
     restart: on-failure
     volumes:
       - './app/:/usr/src/app'
-#    user: 1000:1000
+#    user: ${LOCAL_USER}
+
+#  adminer:
+#    image: adminer
+#    restart: on-failure
+#    ports:
+#      - '${ADMINER_PORT}:8080'
+
+  phpmyadmin:
+    depends_on:
+      - mysql
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8088:80
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
