@@ -2,6 +2,10 @@ login:
     path: /login
     controller: App\Controller\SecurityController::login
 
+logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
 index:
     path: /index
     controller: App\Controller\MainController::index

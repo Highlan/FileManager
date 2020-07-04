@@ -24,4 +24,9 @@ class SecurityController extends AbstractController
             'user_form' => $form->createView()
         ]);
     }
+
+    public function logout()
+    {
+
+    }
 }
