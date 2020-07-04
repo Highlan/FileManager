@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -10,6 +11,15 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
+    private $_userRepository;
+
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->_userRepository = $userRepository;
+    }
+
+
     public function supports(Request $request)
     {
         return $request->attributes->get('_route') === 'login'
@@ -17,21 +27,22 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     }
 
     public function getCredentials(Request $request)
-    {dd($request);
+    {
+
         return [
-            'username' => $request->request->get('username'),
-            'password' => $request->request->get('password'),
+            'username' => 'vance58',//$request->request->get('username'),
+            'password' => ''//$request->request->get('password'),
         ];
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        dd($credentials);
+        return $this->_userRepository->findOneBy(['username' => $credentials['username'], 'password' => $credentials['password']]);
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        // todo
+        dd($user);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
