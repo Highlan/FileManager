@@ -19,13 +19,14 @@ class UserFixture extends BaseFixture
 
     protected function loadData(ObjectManager $manager)
     {
+
+
         $this->createMany(10, function ($i) {
+            $roles = array(['ROLE_ADMIN'], ['ROLE_USER']);
             $user = new User();
             $user->setUsername($this->_faker->userName);
-            $user->setPassword($this->_passwordEncoder->encodePassword(
-                $user,
-                'password'
-            ));
+            $user->setPassword($this->_passwordEncoder->encodePassword($user, 'password'));
+            $user->setRoles($roles[random_int(0, sizeof($roles) - 1)]);
             return $user;
         });
 
