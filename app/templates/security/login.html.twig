@@ -14,7 +14,18 @@
     </div>
 
     <div class="form-label-group">
-        {{ form_row(user_form.username, {'attr': {'class': 'form-control', 'maxlength': 8, 'placeholder': 'Username'}}) }}
+        {{
+        form_row(user_form.username,
+            {
+                'attr':
+                {
+                    'class': 'form-control',
+                    'maxlength': 8,
+                    'placeholder': 'Username'
+                },
+                'value':  last_username
+            })
+        }}
     </div>
 
     <div class="form-label-group">

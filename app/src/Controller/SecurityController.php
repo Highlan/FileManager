@@ -14,8 +14,6 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils, Request $request)
     {
         $form = $this->createForm(UserFormType::class);
-        $form->handleRequest($request);
-
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
