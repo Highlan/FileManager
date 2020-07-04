@@ -5,26 +5,30 @@
 {% endblock %}
 {% block body %}
 
-    {{ form_start(userForm, {'attr': {'class': 'form-signin'}}) }}
+    {{ form_start(user_form, {'attr': {'class': 'form-signin'}}) }}
 
     <div class="text-center mb-4">
         {#<img class="mb-4" src="{{ asset('asset/images/exozet.jpg') }}" alt="" width="72" height="72">#}
-        <h1 class="h3 mb-3 font-weight-normal">GitHub Resume Generator</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Welcome to Upload File Panel</h1>
         <p>Please inter your Username and Password</p>
     </div>
 
     <div class="form-label-group">
-        {{ form_row(userForm.username, {'attr': {'class': 'form-control', 'maxlength': 8, 'placeholder': 'Username'}}) }}
+        {{ form_row(user_form.username, {'attr': {'class': 'form-control', 'maxlength': 8, 'placeholder': 'Username'}}) }}
     </div>
 
     <div class="form-label-group">
-        {{ form_row(userForm.password, {'attr': {'class': 'form-control', 'maxlength': 8, 'placeholder': 'Password'}}) }}
+        {{ form_row(user_form.password, {'attr': {'class': 'form-control', 'maxlength': 8, 'placeholder': 'Password'}}) }}
     </div>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 
     <p class="mt-5 mb-3 text-muted text-center">© July, 2020</p>
 
-    {{ form_end(userForm) }}
+    {{ form_end(user_form) }}
 
 {% endblock %}
