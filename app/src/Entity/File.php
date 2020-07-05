@@ -69,7 +69,7 @@ class File
 
     public function getSize(): ?int
     {
-        return $this->size;
+        return $this->size / 1000; //return as K
     }
 
     public function setSize(int $size): self
