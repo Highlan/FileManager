@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/offcanvas/offcanvas.css">
+    <style>
+        body{
+            padding-top: 0px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+    <main role="main" class="container">
+        <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+            <div class="lh-100">
+                <h6 class="mb-0 text-white lh-100">{{ username | upper}}</h6>
+            </div>
+        </div>
+
+        {{ form_start(file_form) }}
+
+        {{ form_errors(file_form) }}
+        <div class="col"> {{ form_row(file_form.name) }} </div>
+        <button type="submit" class="btn btn-primary" formnovalidate>Save</button>
+
+        {{ form_end(file_form) }}
+    </main>
+
+{% endblock %}
