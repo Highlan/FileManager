@@ -16,14 +16,19 @@ class UploadHelper
         $this->_uploadsPath = $uploadsPath;
     }
 
-    public function UploadFile(UploadedFile $uploadedFile): string
+    public function UploadFile(UploadedFile $uploadedFile, $path): string
     {
         $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
         $newFilename = Urlizer::urlize($originalFilename)  . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
         $uploadedFile->move(
-            $this->_uploadsPath,
+            $this->_uploadsPath . $path,
             $newFilename
         );
         return $newFilename;
+    }
+
+    public function getPublicPath(string $path): string
+    {
+        return 'uploads/'.$path;
     }
 }

@@ -6,10 +6,12 @@ namespace App\Service;
 use App\Entity\File;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileService extends EntityServiceAbstract
 {
+    const USER_FILE_UPLOAD_PATH = '/users/files/';
 
     private $_uploadHelper;
 
@@ -24,7 +26,7 @@ class FileService extends EntityServiceAbstract
         $file = new File();
         $file->setSize($uploadedFile->getSize());
         $file->setFormat($uploadedFile->guessExtension());
-        $file->setName($this->_uploadHelper->uploadFile($uploadedFile));
+        $file->setName($this->_uploadHelper->uploadFile($uploadedFile, self::USER_FILE_UPLOAD_PATH));
         $user->addFile($file);
 
         $this->entityManager->persist($file);
