@@ -14,7 +14,7 @@ class FileFormType extends AbstractType
     {
         $builder
             ->add(
-                'name',
+                'file',
                 FileType::class,
                 [
                     'mapped' => false,

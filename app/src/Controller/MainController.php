@@ -7,6 +7,7 @@ use App\Form\FileFormType;
 use App\Service\UploadHelper;
 use App\Service\FileService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -25,9 +26,13 @@ class MainController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $file = $form->getData();
-
-            //todo
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['file']->getData();
+            if ($uploadedFile) {
+                $newFilename = $uploadHelper->uploadFile($uploadedFile);
+                dd($newFilename);
+//                $fileService->create();
+            }
 
 //            $this->$fileService->create($file);
 
