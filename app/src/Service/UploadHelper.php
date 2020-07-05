@@ -4,6 +4,7 @@ namespace App\Service;
 
 
 use Symfony\Component\Asset\Context\RequestStackContext;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gedmo\Sluggable\Util\Urlizer;
 
@@ -20,11 +21,16 @@ class UploadHelper
         $this->_requestStackContext = $requestStackContext;
     }
 
-    public function UploadFile(UploadedFile $uploadedFile, $path): string
+    public function UploadFile(File $file, $path): string
     {
-        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-        $newFilename = Urlizer::urlize($originalFilename)  . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
-        $uploadedFile->move(
+        if ($file instanceof UploadedFile) {
+            $originalFilename = $file->getClientOriginalName();
+        } else {
+            $originalFilename = $file->getFilename();
+        }
+
+        $newFilename = Urlizer::urlize(pathinfo($originalFilename, PATHINFO_FILENAME)) . '-' . uniqid() . '.' . $file->guessExtension();
+        $file->move(
             $this->_uploadsPath . $path,
             $newFilename
         );

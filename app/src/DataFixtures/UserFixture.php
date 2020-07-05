@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixture extends BaseFixture
 {
     private $_passwordEncoder;
+    private static $roles = array(['ROLE_ADMIN'], ['ROLE_USER']);
 
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
@@ -19,14 +20,12 @@ class UserFixture extends BaseFixture
 
     protected function loadData(ObjectManager $manager)
     {
-
-
         $this->createMany(10, function ($i) {
-            $roles = array(['ROLE_ADMIN'], ['ROLE_USER']);
             $user = new User();
-            $user->setUsername($this->_faker->userName);
+            $user->setUsername($this->faker->userName);
             $user->setPassword($this->_passwordEncoder->encodePassword($user, 'password'));
-            $user->setRoles($roles[random_int(0, sizeof($roles) - 1)]);
+            $user->setRoles($this->faker->randomElement(self::$roles));
+
             return $user;
         });
 

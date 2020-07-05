@@ -24,7 +24,7 @@ class File
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="files")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="files"))
      * @ORM\JoinColumn(nullable=false)
      */
     private $owner;
