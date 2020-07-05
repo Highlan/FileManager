@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\FileRepository;
+use App\Service\FileService;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
