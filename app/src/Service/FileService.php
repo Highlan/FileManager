@@ -4,7 +4,6 @@ namespace App\Service;
 
 
 use App\Entity\File;
-use AppBundle\Service\EntityServiceAbstract;
 use Doctrine\ORM\EntityManagerInterface;
 
 class FileService extends EntityServiceAbstract
