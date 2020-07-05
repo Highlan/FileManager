@@ -16,9 +16,8 @@ class MainController extends AbstractController
 
     public function index(UserInterface $user)
     {
-        dd($user->getFiles());
         return $this->render('main/file/list.html.twig', [
-            'files' => $user->getFiles()
+            'files' => $user->getFiles()->getValues() //todo
         ]);
     }
 
