@@ -4,7 +4,7 @@ namespace App\Controller;
 
 
 use App\Form\FileFormType;
-use App\Security\UploadHelper;
+use App\Service\UploadHelper;
 use App\Service\FileService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
