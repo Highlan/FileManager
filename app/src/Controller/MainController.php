@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
 use App\Form\FileFormType;
-use App\Service\UploadHelper;
 use App\Service\FileService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -14,12 +14,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class MainController extends AbstractController
 {
 
-    public function index()
+    public function index(UserInterface $user)
     {
-        die('index');
+        dd($user->getFiles());
+        return $this->render('main/file/list.html.twig', [
+            'files' => $user->getFiles()
+        ]);
     }
 
-    public function newAction(UserInterface $user, Request $request, UploadHelper $uploadHelper, FileService $fileService)
+    public function newAction(Request $request, FileService $fileService, UserInterface $user)
     {
         $form = $this->createForm(FileFormType::class);
         $form->handleRequest($request);
@@ -28,23 +31,15 @@ class MainController extends AbstractController
         {
             /** @var UploadedFile $uploadedFile */
             $uploadedFile = $form['file']->getData();
-            if ($uploadedFile) {
-                $newFilename = $uploadHelper->uploadFile($uploadedFile);
-                dd($newFilename);
-//                $fileService->create();
-            }
 
-//            $this->$fileService->create($file);
+            $fileService->create($uploadedFile, $user); //todo
 
             $this->addFlash('success', 'File Uploaded!');
-
             return $this->redirectToRoute('index');
         }
 
-
         return $this->render('main/file/new.html.twig', [
-            'file_form' => $form->createView(),
-            'username'  => $user->getUsername()
+            'file_form' => $form->createView()
         ]);
     }
 }

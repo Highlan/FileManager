@@ -4,18 +4,29 @@ namespace App\Service;
 
 
 use App\Entity\File;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileService extends EntityServiceAbstract
 {
 
-    public function __construct(EntityManagerInterface $entityManager)
+    private $_uploadHelper;
+
+    public function __construct(EntityManagerInterface $entityManager, UploadHelper $uploadHelper)
     {
         $this->entityManager = $entityManager;
+        $this->_uploadHelper = $uploadHelper;
     }
 
-    public function create(File $file)
+    public function create(UploadedFile $uploadedFile, User $user)
     {
+        $file = new File();
+        $file->setSize($uploadedFile->getSize());
+        $file->setFormat($uploadedFile->guessExtension());
+        $file->setName($this->_uploadHelper->uploadFile($uploadedFile));
+        $user->addFile($file);
+
         $this->entityManager->persist($file);
         $this->save();
     }
