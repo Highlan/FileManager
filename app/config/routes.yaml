@@ -9,3 +9,7 @@ logout:
 index:
     path: /index
     controller: App\Controller\MainController::index
+
+new_file:
+    path: /new
+    controller: App\Controller\MainController::newAction
