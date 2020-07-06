@@ -21,3 +21,8 @@ download_file:
 delete_file:
     path: /delete/{id}
     controller: App\Controller\MainController::delete
+
+edit_file:
+    path: /edit
+    methods: POST
+    controller: App\Controller\MainController::edit

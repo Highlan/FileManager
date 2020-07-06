@@ -8,6 +8,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class FileService extends EntityServiceAbstract
@@ -34,17 +35,29 @@ class FileService extends EntityServiceAbstract
         $this->save();
     }
 
-    public function update(File $file)
+    public function update($id, $name): Response
     {
-        $this->entityManager->merge($file);
+        /** @var File $file */
+        $file = $this->entityManager->find(File::class, $id);
+        if (!$file){
+            return new Response(null, Response::HTTP_NOT_FOUND);
+        }
+        $file->setOriginName($name);
+//        $this->entityManager->merge($file);
         $this->save();
+        return new Response(null, Response::HTTP_OK);
     }
 
-    public function remove(File $file)
+    public function remove(File $file): bool
     {
         $this->entityManager->remove($file);
         $this->save();
-        $this->_uploadHelper->deleteFile(self::getDefaultPath($file), false);
+        try{
+            $this->_uploadHelper->deleteFile(self::getDefaultPath($file), false);
+            return true;
+        }catch (\Exception $exception){
+            return false;
+        }
     }
 
     public function download(File $file): BinaryFileResponse
@@ -55,7 +68,7 @@ class FileService extends EntityServiceAbstract
         return $response;
     }
 
-    private static function getDefaultPath(File $file)
+    private static function getDefaultPath(File $file): string
     {
         return self::USER_FILE_UPLOAD_PATH . $file->getOwner()->getId() . '/' . $file->getName();
     }

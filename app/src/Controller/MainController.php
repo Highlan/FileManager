@@ -10,7 +10,9 @@ use App\Service\FileService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class MainController extends AbstractController
@@ -58,5 +60,10 @@ class MainController extends AbstractController
         $fileService->remove($file);
         $this->addFlash('success', 'File removed!');
         return $this->redirectToRoute('index');
+    }
+
+    public function edit(Request $request, FileService $fileService)
+    {
+        return $fileService->update($request->request->get('pk'), $request->request->get('value'));
     }
 }
