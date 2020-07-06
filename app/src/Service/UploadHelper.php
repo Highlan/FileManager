@@ -12,17 +12,19 @@ use Gedmo\Sluggable\Util\Urlizer;
 class UploadHelper
 {
 
-    private $_uploadsPath;
+    private $_publicUploadsPath;
+    private $_privateUploadsPath;
     private $_requestStackContext;
 
 
-    public function __construct($uploadsPath, RequestStackContext $requestStackContext)
+    public function __construct($publicUploadsPath, $privateUploadsPath, RequestStackContext $requestStackContext)
     {
-        $this->_uploadsPath = $uploadsPath;
+        $this->_publicUploadsPath = $publicUploadsPath;
+        $this->_privateUploadsPath = $privateUploadsPath;
         $this->_requestStackContext = $requestStackContext;
     }
 
-    public function UploadFile(File $file, $path): string
+    public function UploadFile(File $file, $path, $isPublic): string
     {
         if ($file instanceof UploadedFile) {
             $originalFilename = $file->getClientOriginalName();
@@ -33,7 +35,7 @@ class UploadHelper
         $newFilename = Urlizer::urlize(pathinfo($originalFilename, PATHINFO_FILENAME)) . '-' . uniqid() . '.' . $file->guessExtension();
         try {
             $file->move(
-                $this->_uploadsPath . $path,
+                ($isPublic ? $this->_publicUploadsPath : $this->_privateUploadsPath) . $path,
                 $newFilename
             );
         } catch (FileException $e) {
