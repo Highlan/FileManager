@@ -8,11 +8,11 @@ logout:
 
 index:
     path: /index
-    controller: App\Controller\MainController::index
+    controller: App\Controller\MainController::list
 
 new_file:
     path: /new
-    controller: App\Controller\MainController::newAction
+    controller: App\Controller\MainController::new
 
 download_file:
     path: /download/{id}

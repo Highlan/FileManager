@@ -18,14 +18,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class MainController extends AbstractController
 {
 
-    public function index(UserInterface $user)
+    public function list(UserInterface $user)
     {
         return $this->render('main/file/list.html.twig', [
             'files' => $user->getFiles()->getValues() //todo
         ]);
     }
 
-    public function newAction(Request $request, FileService $fileService, UserInterface $user)
+    public function new(Request $request, FileService $fileService, UserInterface $user)
     {
         $form = $this->createForm(FileFormType::class);
         $form->handleRequest($request);
