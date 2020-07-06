@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 
+use App\Entity\File;
 use App\Entity\User;
 use App\Form\FileFormType;
+use App\Security\FileVoter;
 use App\Service\FileService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -40,5 +42,11 @@ class MainController extends AbstractController
         return $this->render('main/file/new.html.twig', [
             'file_form' => $form->createView()
         ]);
+    }
+
+    public function download(File $file)
+    {
+        $this->denyAccessUnlessGranted(FileVoter::DOWNLOAD, $file);
+        dd($file);
     }
 }

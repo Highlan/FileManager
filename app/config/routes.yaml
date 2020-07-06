@@ -13,3 +13,7 @@ index:
 new_file:
     path: /new
     controller: App\Controller\MainController::newAction
+
+download_file:
+    path: /download/{id}
+    controller: App\Controller\MainController::download
