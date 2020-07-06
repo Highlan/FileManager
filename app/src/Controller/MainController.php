@@ -57,8 +57,13 @@ class MainController extends AbstractController
     {
         $this->denyAccessUnlessGranted(FileVoter::MANAGE, $file);
 
-        $fileService->remove($file);
-        $this->addFlash('success', 'File removed!');
+        $result = $fileService->remove($file);
+        if ($result){
+            $this->addFlash('success', 'File removed!');
+        }
+        else{
+            $this->addFlash('error', 'Error on removing file!');
+        }
         return $this->redirectToRoute('index');
     }
 

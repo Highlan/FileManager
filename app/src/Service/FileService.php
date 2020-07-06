@@ -51,9 +51,10 @@ class FileService extends EntityServiceAbstract
     public function remove(File $file): bool
     {
         $this->entityManager->remove($file);
-        $this->save();
+
         try{
             $this->_uploadHelper->deleteFile(self::getDefaultPath($file), false);
+            $this->save();
             return true;
         }catch (\Exception $exception){
             return false;

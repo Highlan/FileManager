@@ -27,6 +27,11 @@
                 {{ msg }}
             </div>
         {% endfor %}
+        {% for msg in app.session.flashBag.get('error') %}
+            <div class="alert alert-danger" role="alert">
+                {{ msg }}
+            </div>
+        {% endfor %}
 
         <h6 class="border-bottom border-gray pb-2 mb-0">Files</h6>
         {% if files is not empty %}
