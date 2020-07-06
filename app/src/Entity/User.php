@@ -127,26 +127,26 @@ class User implements UserInterface
         return $this->files;
     }
 
-    public function addFile(File $file): self
-    {
-        if (!$this->files->contains($file)) {
-            $this->files[] = $file;
-            $file->setOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFile(File $file): self
-    {
-        if ($this->files->contains($file)) {
-            $this->files->removeElement($file);
-            // set the owning side to null (unless already changed)
-            if ($file->getOwner() === $this) {
-                $file->setOwner(null);
-            }
-        }
-
-        return $this;
-    }
+//    public function addFile(File $file): self
+//    {
+//        if (!$this->files->contains($file)) {
+//            $this->files[] = $file;
+//            $file->setOwner($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeFile(File $file): self
+//    {
+//        if ($this->files->contains($file)) {
+//            $this->files->removeElement($file);
+//            // set the owning side to null (unless already changed)
+//            if ($file->getOwner() === $this) {
+//                $file->setOwner(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
 }

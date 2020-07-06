@@ -23,11 +23,10 @@ class FileService extends EntityServiceAbstract
 
     public function create(UploadedFile $uploadedFile, User $user)
     {
-        $file = new File();
+        $file = new File($user);
         $file->setSize($uploadedFile->getSize());
         $file->setFormat($uploadedFile->guessExtension());
         $file->setName($this->_uploadHelper->uploadFile($uploadedFile, self::USER_FILE_UPLOAD_PATH . $user->getId()));
-        $user->addFile($file);
 
         $this->entityManager->persist($file);
         $this->save();

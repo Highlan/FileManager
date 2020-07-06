@@ -61,12 +61,12 @@ class File
         return $this->owner;
     }
 
-    public function setOwner(?User $owner): self
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
+//    public function setOwner(?User $owner): self
+//    {
+//        $this->owner = $owner;
+//
+//        return $this;
+//    }
 
     public function getSize(): ?int
     {
@@ -90,5 +90,10 @@ class File
         $this->format = $format;
 
         return $this;
+    }
+
+    public function __construct(User $owner)
+    {
+        $this->owner = $owner;
     }
 }

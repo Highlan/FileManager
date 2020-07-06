@@ -36,10 +36,9 @@ class FileFixture extends BaseFixture implements DependentFixtureInterface
                 $fs->copy(__DIR__ . '/files/' . $randomImage, $targetPath, true);
                 $file = new File($targetPath);
 
-                $file_entity = new FileEntity();
+                $file_entity = new FileEntity($user);
                 $file_entity->setFormat($file->guessExtension());
                 $file_entity->setSize($file->getSize());
-                $file_entity->setOwner($user);
                 $file_entity->setName($this->_uploaderHelper->UploadFile($file,FileService::USER_FILE_UPLOAD_PATH . $user->getId()));
 
                 return $file_entity;
