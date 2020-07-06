@@ -35,7 +35,7 @@ class MainController extends AbstractController
 
             $fileService->create($uploadedFile, $user); //todo
 
-            $this->addFlash('success', 'File Uploaded!');
+            $this->addFlash('success', 'File uploaded!');
             return $this->redirectToRoute('index');
         }
 
@@ -47,6 +47,16 @@ class MainController extends AbstractController
     public function download(File $file, FileService $fileService): BinaryFileResponse
     {
         $this->denyAccessUnlessGranted(FileVoter::DOWNLOAD, $file);
+
         return $fileService->download($file);
+    }
+
+    public function delete(File $file, FileService $fileService)
+    {
+        $this->denyAccessUnlessGranted(FileVoter::MANAGE, $file);
+
+        $fileService->remove($file);
+        $this->addFlash('success', 'File removed!');
+        return $this->redirectToRoute('index');
     }
 }

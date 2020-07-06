@@ -44,13 +44,19 @@ class FileService extends EntityServiceAbstract
     {
         $this->entityManager->remove($file);
         $this->save();
+        $this->_uploadHelper->deleteFile(self::getDefaultPath($file), false);
     }
 
     public function download(File $file): BinaryFileResponse
     {
-        $response = new BinaryFileResponse($this->_uploadHelper->getUploadPath(FileService::USER_FILE_UPLOAD_PATH . $file->getOwner()->getId() . '/' . $file->getName(), false));
+        $response = new BinaryFileResponse($this->_uploadHelper->getUploadPath(self::getDefaultPath($file), false));
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file->getOriginName() . '.' . $file->getFormat());
 
         return $response;
+    }
+
+    private static function getDefaultPath(File $file)
+    {
+        return self::USER_FILE_UPLOAD_PATH . $file->getOwner()->getId() . '/' . $file->getName();
     }
 }

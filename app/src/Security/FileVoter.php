@@ -11,11 +11,12 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class FileVoter extends Voter
 {
     const DOWNLOAD = 'download';
+    const MANAGE   = 'manage';
 
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::DOWNLOAD])) {
+        if (!in_array($attribute, [self::MANAGE, self::DOWNLOAD])) {
             return false;
         }
 
@@ -40,6 +41,9 @@ class FileVoter extends Voter
         $file = $subject;
 
         switch ($attribute) {
+            case self::MANAGE:
+                return $this->canDownload($file, $user);
+                break;
             case self::DOWNLOAD:
                 return $this->canDownload($file, $user);
                 break;
@@ -49,6 +53,10 @@ class FileVoter extends Voter
     }
 
     private function canDownload(File $file, User $user)
+    {
+        return $this->canManage($file, $user);
+    }
+    private function canManage(File $file, User $user)
     {
         return $user === $file->getOwner();
     }

@@ -17,3 +17,7 @@ new_file:
 download_file:
     path: /download/{id}
     controller: App\Controller\MainController::download
+
+delete_file:
+    path: /delete/{id}
+    controller: App\Controller\MainController::delete

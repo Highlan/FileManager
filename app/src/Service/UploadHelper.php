@@ -35,7 +35,7 @@ class UploadHelper
         $newFilename = Urlizer::urlize(pathinfo($originalFilename, PATHINFO_FILENAME)) . '-' . uniqid() . '.' . $file->guessExtension();
         try {
             $file->move(
-                ($isPublic ? $this->_publicUploadsPath : $this->_privateUploadsPath) . $path,
+                ($isPublic ? $this->_publicUploadsPath : $this->_privateUploadsPath) . '/' . $path,
                 $newFilename
             );
         } catch (FileException $e) {
@@ -51,8 +51,11 @@ class UploadHelper
         return $this->_requestStackContext->getBasePath() . ($isPublic ? $this->_publicUploadsPath : $this->_privateUploadsPath) . '/' . $path;
     }
 
-    public function DeleteFile()
+    public function deleteFile(string $path, bool $isPublic)
     {
-
+        $result = unlink(($isPublic ? $this->_publicUploadsPath : $this->_privateUploadsPath) . '/' . $path);
+        if ($result === false) {
+            throw new \Exception(sprintf('Error deleting "%s"', $path));
+        }
     }
 }
