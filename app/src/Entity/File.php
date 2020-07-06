@@ -39,6 +39,11 @@ class File
      */
     private $format;
 
+    /**
+     * @ORM\Column(type="string", length=200)
+     */
+    private $origin_name;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -95,5 +100,17 @@ class File
     public function __construct(User $owner)
     {
         $this->owner = $owner;
+    }
+
+    public function getOriginName(): ?string
+    {
+        return $this->origin_name;
+    }
+
+    public function setOriginName(string $origin_name): self
+    {
+        $this->origin_name = $origin_name;
+
+        return $this;
     }
 }
