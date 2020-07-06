@@ -4,11 +4,11 @@ namespace App\Controller;
 
 
 use App\Entity\File;
-use App\Entity\User;
 use App\Form\FileFormType;
 use App\Security\FileVoter;
 use App\Service\FileService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -44,9 +44,9 @@ class MainController extends AbstractController
         ]);
     }
 
-    public function download(File $file)
+    public function download(File $file, FileService $fileService): BinaryFileResponse
     {
         $this->denyAccessUnlessGranted(FileVoter::DOWNLOAD, $file);
-        dd($file);
+        return $fileService->download($file);
     }
 }

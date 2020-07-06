@@ -46,9 +46,9 @@ class UploadHelper
         return $newFilename;
     }
 
-    public function getPublicPath(string $path): string
+    public function getUploadPath(string $path, $isPublic): string
     {
-        return $this->_requestStackContext->getBasePath() . 'uploads/' . $path;
+        return $this->_requestStackContext->getBasePath() . ($isPublic ? $this->_publicUploadsPath : $this->_privateUploadsPath) . '/' . $path;
     }
 
     public function DeleteFile()
