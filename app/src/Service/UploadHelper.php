@@ -4,6 +4,7 @@ namespace App\Service;
 
 
 use Symfony\Component\Asset\Context\RequestStackContext;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gedmo\Sluggable\Util\Urlizer;
@@ -30,15 +31,26 @@ class UploadHelper
         }
 
         $newFilename = Urlizer::urlize(pathinfo($originalFilename, PATHINFO_FILENAME)) . '-' . uniqid() . '.' . $file->guessExtension();
-        $file->move(
-            $this->_uploadsPath . $path,
-            $newFilename
-        );
+        try {
+            $file->move(
+                $this->_uploadsPath . $path,
+                $newFilename
+            );
+        } catch (FileException $e) {
+            // todo
+        }
+
+
         return $newFilename;
     }
 
     public function getPublicPath(string $path): string
     {
         return $this->_requestStackContext->getBasePath() . 'uploads/' . $path;
+    }
+
+    public function DeleteFile()
+    {
+
     }
 }
