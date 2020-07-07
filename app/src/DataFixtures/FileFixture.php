@@ -14,7 +14,7 @@ use \App\Entity\File as FileEntity;
 class FileFixture extends BaseFixture implements DependentFixtureInterface
 {
     private $_uploaderHelper;
-    private static $files = array('1.jpeg', '2.jpeg', '3.jpeg');
+    private static $files = array('image-1.jpg', 'image-2.jpg', 'image-3.jpg');
 
 
     public function __construct(UploadHelper $uploaderHelper)
