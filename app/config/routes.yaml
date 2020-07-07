@@ -7,22 +7,22 @@ logout:
     controller: App\Controller\SecurityController::logout
 
 index:
-    path: /index
+    path: /files
     controller: App\Controller\MainController::list
 
 new_file:
-    path: /new
+    path: /files/new
     controller: App\Controller\MainController::new
 
 download_file:
-    path: /download/{id}
+    path: /files/download/{id}
     controller: App\Controller\MainController::download
 
 delete_file:
-    path: /delete/{id}
+    path: /files/delete/{id}
     controller: App\Controller\MainController::delete
 
 edit_file:
-    path: /edit
+    path: /files/edit
     methods: POST
     controller: App\Controller\MainController::edit
