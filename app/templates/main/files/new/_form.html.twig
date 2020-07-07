@@ -1,0 +1,20 @@
+{#{{ form_start(file_form) }}#}
+        {#{{ form_errors(file_form) }}#}
+        {#<div class="input-group">#}
+            {#<div class="input-group-prepend">#}
+                {#<button type="submit" class="input-group-text" id="inputFileAdd">Upload</button>#}
+            {#</div>#}
+            {#<div class="custom-file">#}
+                {#{{ form_row(file_form.file, {'id':'inputFile', 'attr':{'class':'custom-file-input'}}) }}#}
+                {#<label class="custom-file-label" for="inputFile">Choose file</label>#}
+            {#</div>#}
+        {#</div>#}
+        {#{{ form_end(file_form) }}#}
+
+{{ form_start(file_form) }}
+
+{{ form_errors(file_form) }}
+<div class="col"> {{ form_row(file_form.file) }} </div>
+<button type="submit" class="btn btn-primary" formnovalidate>Upload</button>
+
+{{ form_end(file_form) }}

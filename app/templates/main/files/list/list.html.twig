@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% include('main/files/list/_style.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+    <main role="main" class="container">
+        {% include('main/files/_header.html.twig') %}
+
+        {% include('main/files/_messages.html.twig') %}
+
+        {% include('main/files/list/_files.html.twig') %}
+
+        <small class="d-block text-right mt-3">
+            <a href="{{ path('new_file') }}"> Add new file </a>
+        </small>
+
+    </main>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% include('main/files/list/_scripts.html.twig') %}
+{% endblock %}
+

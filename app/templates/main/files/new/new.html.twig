@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% include('main/files/new/_style.html.twig') %}
+{% endblock %}
+{% block body %}
+
+    <main role="main" class="container">
+        {% include('main/files/_header.html.twig') %}
+
+        {% include('main/files/new/_form.html.twig') %}
+    </main>
+
+{% endblock %}

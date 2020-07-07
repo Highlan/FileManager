@@ -11,14 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class MainController extends AbstractController
 {
 
     public function list()
     {
-        return $this->render('main/file/list.html.twig', [
+        return $this->render('main/files/list/list.html.twig', [
             'files' => $this->getUser()->getFiles()->getValues()
         ]);
     }
@@ -39,7 +38,7 @@ class MainController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        return $this->render('main/file/new.html.twig', [
+        return $this->render('main/files/new/new.html.twig', [
             'file_form' => $form->createView()
         ]);
     }

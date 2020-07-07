@@ -1,6 +1,8 @@
 login:
     path: /
     controller: App\Controller\SecurityController::login
+    defaults:
+        title: "Real Digital | Login"
 
 logout:
     path: /logout
@@ -9,10 +11,14 @@ logout:
 index:
     path: /files
     controller: App\Controller\MainController::list
+    defaults:
+        title: "Real Digital | Files"
 
 new_file:
     path: /files/new
     controller: App\Controller\MainController::new
+    defaults:
+        title: "Real Digital | New File"
 
 download_file:
     path: /files/download/{id}
