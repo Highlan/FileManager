@@ -1,5 +1,5 @@
 login:
-    path: /login
+    path: /
     controller: App\Controller\SecurityController::login
 
 logout:
