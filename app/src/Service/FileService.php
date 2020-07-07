@@ -63,7 +63,11 @@ class FileService extends EntityServiceAbstract
 
     public function download(File $file): BinaryFileResponse
     {
-        $response = new BinaryFileResponse($this->_uploadHelper->getUploadPath(self::getDefaultPath($file), false));
+        $path = $this->_uploadHelper->getUploadPath(self::getDefaultPath($file), false);
+        if (!$this->_uploadHelper->checkFileExist($path)){
+            throw new \Exception(sprintf('File "%s" does not exist!', $file->getOriginName()));
+        }
+        $response = new BinaryFileResponse($path);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file->getOriginName() . '.' . $file->getFormat());
 
         return $response;

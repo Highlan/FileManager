@@ -43,11 +43,16 @@ class MainController extends AbstractController
         ]);
     }
 
-    public function download(File $file, FileService $fileService): BinaryFileResponse
+    public function download(File $file, FileService $fileService)
     {
         $this->denyAccessUnlessGranted(FileVoter::DOWNLOAD, $file);
 
-        return $fileService->download($file);
+        try{
+            return $fileService->download($file);
+        }catch (\Exception $exception){
+            $this->addFlash('error', $exception->getMessage());
+            return $this->redirectToRoute('index');
+        }
     }
 
     public function delete(File $file, FileService $fileService)

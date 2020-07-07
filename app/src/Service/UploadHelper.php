@@ -53,9 +53,15 @@ class UploadHelper
 
     public function deleteFile(string $path, bool $isPublic)
     {
-        $result = unlink(($isPublic ? $this->_publicUploadsPath : $this->_privateUploadsPath) . '/' . $path);
-        if ($result === false) {
-            throw new \Exception(sprintf('Error deleting "%s"', $path));
+        $file = ($isPublic ? $this->_publicUploadsPath : $this->_privateUploadsPath) . '/' . $path;
+        if (!$this->checkFileExist($file)){
+            throw new \Exception(sprintf('File "%s" does not exist!', $path));
         }
+        unlink($file);
+    }
+
+    public function checkFileExist(string $path)
+    {
+        return file_exists($path);
     }
 }
