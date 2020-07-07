@@ -13,14 +13,7 @@
 {% block body %}
 
     <main role="main" class="container">
-        <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
-            <div class="lh-100">
-                <h6 class="mb-0 text-white lh-100">{{ app.user.username | upper}}</h6>
-                <small>
-                    <a href="{{ path('logout') }}" title="Logout">Logout </a>
-                </small>
-            </div>
-        </div>
+        {% include('main/file/_header.html.twig') %}
 
         {% include('main/file/messages.html.twig') %}
 
