@@ -16,14 +16,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class MainController extends AbstractController
 {
 
-    public function list(UserInterface $user)
+    public function list()
     {
         return $this->render('main/file/list.html.twig', [
-            'files' => $user->getFiles()->getValues() //todo
+            'files' => $this->getUser()->getFiles()->getValues()
         ]);
     }
 
-    public function new(Request $request, FileService $fileService, UserInterface $user)
+    public function new(Request $request, FileService $fileService)
     {
         $form = $this->createForm(FileFormType::class);
         $form->handleRequest($request);
@@ -33,7 +33,7 @@ class MainController extends AbstractController
             /** @var UploadedFile $uploadedFile */
             $uploadedFile = $form['file']->getData();
 
-            $fileService->create($uploadedFile, $user); //todo
+            $fileService->create($uploadedFile, $this->getUser());
 
             $this->addFlash('success', 'File uploaded!');
             return $this->redirectToRoute('index');
