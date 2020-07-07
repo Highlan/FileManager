@@ -2,7 +2,11 @@
     <div class="lh-100">
         <h6 class="mb-0 text-white lh-100">{{ app.user.username | upper}}</h6>
         <small>
-            <a href="{{ path('logout') }}" title="Logout">Logout </a>
+            <a href="{{ path('logout') }}" title="Logout" class="header-link">Logout </a>
+        </small>
+        |
+        <small>
+            <a href="{{ path('index') }}" title="Files" class="header-link">Files </a>
         </small>
     </div>
 </div>
